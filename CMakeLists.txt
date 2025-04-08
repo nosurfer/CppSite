@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}")
 
@@ -13,6 +13,8 @@ FetchContent_Declare(
 )
 
 FetchContent_MakeAvailable(crow)
+find_package(SQLite3 REQUIRED)
 
-add_executable(app main.cpp)
+add_executable(app db.cpp)
+target_link_libraries(app PRIVATE SQLite::SQLite3)
 target_include_directories(app PRIVATE ${crow_SOURCE_DIR}/include)
