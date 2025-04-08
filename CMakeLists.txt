@@ -14,7 +14,8 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(crow)
 find_package(SQLite3 REQUIRED)
+include_directories(${CMAKE_SOURCE_DIR}/lib)
 
-add_executable(app db.cpp)
+add_executable(app src/main.cpp lib/DatabaseAPI.cpp)
 target_link_libraries(app PRIVATE SQLite::SQLite3)
 target_include_directories(app PRIVATE ${crow_SOURCE_DIR}/include)
