@@ -1,4 +1,3 @@
-build/
-
-sqlite3.db
-app
+backend/build/
+backend/app
+backend/sqlite3.db

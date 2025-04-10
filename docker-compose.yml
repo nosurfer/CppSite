@@ -1,13 +1,24 @@
-sevices:
+services:
   server:
     image: nginx
     volumes:
-      - ./templates:/etc/nginx/templates
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/index.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./templates/:/usr/share/nginx/html/:ro
     ports:
-      - "8080:80"
-    environment:
-      - NGINX_HOST=foobar.com
-      - NGINX_PORT=80
+      - "80:80"
+    depends_on:
+      - backend
+    command: /bin/sh -c "nginx -t && nginx -g 'daemon off;'"
+    networks:
+      - app-network
 
-  back:
-    pass
+  backend:
+    build:
+      context: ./backend
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
