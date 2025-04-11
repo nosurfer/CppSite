@@ -1,15 +1,16 @@
 services:
   server:
-    image: nginx
+    build:
+      context: ./nginx
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./nginx/index.conf:/etc/nginx/conf.d/default.conf:ro
-      - ./templates/:/usr/share/nginx/html/:ro
+      - ./nginx/vulnerable.com.conf:/etc/nginx/conf.d/vulnerable.com.conf:ro
+      - ./frontend/templates/:/usr/share/nginx/html/:ro
     ports:
       - "80:80"
+      - "443:443"
     depends_on:
       - backend
-    command: /bin/sh -c "nginx -t && nginx -g 'daemon off;'"
     networks:
       - app-network
 

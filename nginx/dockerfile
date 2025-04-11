@@ -1,0 +1,4 @@
+FROM nginx:latest
+WORKDIR /etc/nginx/
+COPY --chmod=500 ./entrypoint.sh .
+CMD ["./entrypoint.sh"]

@@ -1,3 +1,6 @@
 backend/build/
 backend/app
 backend/sqlite3.db
+
+nginx/**/*.crt
+nginx/**/*.key
