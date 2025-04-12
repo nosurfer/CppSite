@@ -22,7 +22,9 @@ int main() {
             return crow::response(500, "Database error.");
         }
 
-        return crow::response(200, "Value inserted!");
+        crow::json::wvalue result;
+        result["result"] = "Value inserted";
+        return crow::response(200, result);
     });
 
     CROW_ROUTE(app, "/api/data").methods("GET"_method)

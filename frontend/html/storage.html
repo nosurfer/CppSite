@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Mikhail Krutov">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/static/storage.css">
+    <script src="/static/storage.js"></script>
+    <title>API Interaction</title>
+    <link
+</head>
+<body>
+    <div class="card">
+        <h1>Хранилище</h1>
+        <div class="section">
+            <h2>Отправка данных</h2>
+            <input type="text" id="postName" placeholder="Введите имя" />
+            <input type="text" id="postData" placeholder="Введите данные" />
+            <br>
+            <button onclick="sendPost()">Отправить</button>
+        </div>
+        <div class="section">
+            <h2>Получение данных</h2>
+            <input type="text" id="getName" placeholder="Введите имя для GET запроса" />
+            <br>
+            <button onclick="sendGet()">Получить</button>
+        </div>
+        <div id="response"></div>
+        <br>
+        <div class="prev">
+            <a href="/">Перейти на главную страницу</a>
+        </div>
+    </div>
+    
+</body>
+</html>
