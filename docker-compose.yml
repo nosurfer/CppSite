@@ -1,10 +1,10 @@
 services:
-  server:
+  nginx:
+    container_name: nginx_server
     build:
       context: ./nginx
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./nginx/vulnerable.com.conf:/etc/nginx/conf.d/vulnerable.com.conf:ro
+      - ./nginx/nginx.conf[main]:/etc/nginx/nginx.conf:ro
       - ./frontend/:/usr/share/nginx/:ro
     ports:
       - "80:80"
@@ -13,8 +13,23 @@ services:
       - backend
     networks:
       - app-network
-
+  
+  # apache:
+  #   container_name: apache_server
+  #   build:
+  #     context: ./apache
+  #   volumes:
+  #     - ./apache/httpd.conf:/usr/local/apache2/conf/httpd.conf:ro
+  #   ports:
+  #     - "9080:80"
+  #     - "9443:80"
+  #   depends_on:
+  #     - backend
+  #   networks:
+  #     - app-network
+    
   backend:
+    container_name: crow_cpp
     build:
       context: ./backend
     networks:

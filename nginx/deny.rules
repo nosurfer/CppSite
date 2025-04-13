@@ -1,0 +1,12 @@
+if ($request_method !~ ^(GET|HEAD|POST)$ ) {
+    return 444;
+}
+if ($host !~ ^vulnerable\.com$ ) {
+    return 444;
+}
+if ($http_user_agent ~* LWP::Simple|BBBike|wget) {
+    return 403;
+}
+if ($http_user_agent ~* msnbot|scrapbot) {
+    return 403;
+}
