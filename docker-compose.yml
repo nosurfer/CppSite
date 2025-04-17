@@ -1,40 +1,39 @@
 services:
-  # nginx:
-  #   container_name: nginx_server
-  #   build:
-  #     context: ./nginx
-  #   volumes:
-  #     - ./nginx/nginx.conf[main]:/etc/nginx/nginx.conf:ro
-  #     - ./frontend/:/usr/share/nginx/:ro
-  #   ports:
-  #     - "80:80"
-  #     - "443:443"
-  #   depends_on:
-  #     - backend
-  #   networks:
-  #     - app-network
+  nginx:
+    container_name: nginx_server
+    build:
+      context: ./nginx
+    volumes:
+      - ./nginx/nginx.conf[main]:/etc/nginx/nginx.conf:ro
+      - ./frontend/:/usr/share/nginx/:ro
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - backend
+    networks:
+      - app-network
   
   apache:
     container_name: apache_server
     build:
       context: ./apache
     volumes:
-      - ./apache/apache2.conf:/etc/apache2/apache2.conf:ro
       - ./frontend/:/var/www/html/:ro
     ports:
-      - "80:80"
-      - "443:80"
-    # depends_on:
-    #   - backend
+      - "180:80"
+      - "1443:443"
+    depends_on:
+      - backend
     networks:
       - app-network
     
-  # backend:
-  #   container_name: crow_cpp
-  #   build:
-  #     context: ./backend
-  #   networks:
-  #     - app-network
+  backend:
+    container_name: crow_cpp
+    build:
+      context: ./backend
+    networks:
+      - app-network
 
 networks:
   app-network:
