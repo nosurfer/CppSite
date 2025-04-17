@@ -5,9 +5,10 @@ RUN apt update && apt install -y \
     libapache2-mod-security2 \
     libapache2-mod-evasive \
     iptables \
+    openssl \
     git
 
-RUN a2enmod evasive security2 headers unique_id
+RUN a2enmod evasive security2 headers unique_id ssl
 
 RUN cp /etc/modsecurity/modsecurity.conf-recommended /etc/modsecurity/modsecurity.conf
 RUN sed -i 's/SecRuleEngine DetectionOnly/SecRuleEngine On/' /etc/modsecurity/modsecurity.conf
@@ -17,12 +18,16 @@ RUN git clone https://github.com/coreruleset/coreruleset /usr/share/modsecurity-
     mv /usr/share/modsecurity-crs/crs-setup.conf.example /usr/share/modsecurity-crs/crs-setup.conf && \
     mv /usr/share/modsecurity-crs/rules/REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf.example /usr/share/modsecurity-crs/rules/REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf
 
+RUN openssl req -x509 -nodes -newkey rsa:2048 \
+    -subj /CN=vulnerable1.com/C=RU/ST=example/O=example/OU=examle \
+    -keyout /etc/apache2/vulnerable.com.key -text -out /etc/apache2/vulnerable.com.crt
+
 COPY apache2.conf /etc/apache2/apache2.conf
 COPY security2.conf /etc/apache2/mods-available/security2.conf
 COPY modsecurity.conf /etc/modsecurity/modsecurity.conf
 COPY vulnerable1.com.conf /etc/apache2/sites-available/
 
-RUN a2ensite vulnerable1.com
+RUN a2ensite vulnerable1.com default-ssl
 RUN apache2ctl configtest
 
 CMD ["apachectl", "-D", "FOREGROUND"]
