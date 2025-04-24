@@ -13,5 +13,5 @@ RUN apk add --no-cache \
 
 WORKDIR /app
 COPY . .
-RUN chmod +x ./install.sh
-CMD ["./install.sh"]
+RUN cmake -B build -S . && cmake --build ./build
+CMD ["./app"]

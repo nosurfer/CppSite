@@ -1,18 +1,18 @@
 services:
-  nginx:
-    container_name: nginx_server
-    build:
-      context: ./nginx
-    volumes:
-      - ./nginx/nginx.conf[main]:/etc/nginx/nginx.conf:ro
-      - ./frontend/:/usr/share/nginx/:ro
-    ports:
-      - "80:80"
-      - "443:443"
-    depends_on:
-      - backend
-    networks:
-      - app-network
+  # nginx:
+  #   container_name: nginx_server
+  #   build:
+  #     context: ./nginx
+  #   volumes:
+  #     - ./nginx/nginx.conf[main]:/etc/nginx/nginx.conf:ro
+  #     - ./frontend/:/usr/share/nginx/:ro
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   depends_on:
+  #     - backend
+  #   networks:
+  #     - app-network
   
   apache:
     container_name: apache_server
